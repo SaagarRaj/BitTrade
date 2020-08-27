@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,25 +29,43 @@ public class SignupActivity extends AppCompatActivity {
         et_emailSignup = findViewById(R.id.et_emailSignup);
         et_passwordSignup = findViewById(R.id.et_passwordSignup);
         btn_signup = findViewById(R.id.btn_signup);
-         email = et_emailSignup.getText().toString();
-         pass = et_passwordSignup.getText().toString();
+
 
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAuth.createUserWithEmailAndPassword(email , pass).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()) {
-                            startActivity(new Intent(SignupActivity.this , LoginActivity.class));
-                        }
-                        else {
-                            Toast.makeText(SignupActivity.this , "Registartion failed",Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+                signup();
+
             }
         });
 
+    }
+    public void signup(){
+        email = et_emailSignup.getText().toString();
+        pass = et_passwordSignup.getText().toString();
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(getApplicationContext(), "Please enter email...", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (TextUtils.isEmpty(pass)) {
+            Toast.makeText(getApplicationContext(), "Please enter password!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        mAuth.createUserWithEmailAndPassword(email , pass).addOnCompleteListener( new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+
+
+                if(task.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(SignupActivity.this , LoginActivity.class));
+                }
+                else {
+                    Toast.makeText(SignupActivity.this , "Registartion failed",Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+        });
     }
 }

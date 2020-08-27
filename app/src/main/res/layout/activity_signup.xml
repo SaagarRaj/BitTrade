@@ -32,6 +32,7 @@
             android:drawableLeft="@drawable/ic_baseline_person_24"
             android:hint="   Name"
             android:padding="10dp"
+            android:textColor="#ffffff"
             android:textColorHint="@color/colorBg"
             android:textSize="20dp" />
 
@@ -41,13 +42,14 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/et_nameSignup"
             android:layout_marginLeft="20dp"
-            android:inputType="textEmailAddress"
             android:layout_marginTop="30dp"
             android:layout_marginRight="25dp"
             android:background="@drawable/border"
             android:drawableLeft="@drawable/ic_baseline_email_24"
             android:hint="   E-Mail"
+            android:inputType="textEmailAddress"
             android:padding="10dp"
+            android:textColor="#ffffff"
             android:textColorHint="@color/colorBg"
             android:textSize="20dp" />
 
@@ -57,13 +59,14 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/et_emailSignup"
             android:layout_marginLeft="20dp"
-            android:inputType="textPassword"
             android:layout_marginTop="30dp"
             android:layout_marginRight="25dp"
             android:background="@drawable/border"
             android:drawableLeft="@drawable/ic_baseline_lock_24"
-            android:hint="   Password"
+            android:hint=" Password"
+            android:inputType="textPassword"
             android:padding="10dp"
+            android:textColor="#ffffff"
             android:textColorHint="@color/colorBg"
             android:textSize="20dp" />
 
@@ -72,19 +75,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/et_passwordSignup"
-            android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
-            android:background="@drawable/button"
             android:layout_marginTop="50dp"
-            android:text="Sign up"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/button"
             android:fontFamily="@font/poppins"
+            android:text="Sign up"
+            android:textColor="@color/colorBg2"
             android:textSize="25dp"
-            android:textStyle="bold"
-            android:textColor="@color/colorBg2"/>
-
-
-
-
+            android:textStyle="bold" />
 
 
     </RelativeLayout>
