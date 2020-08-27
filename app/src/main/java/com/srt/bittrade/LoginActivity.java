@@ -44,8 +44,9 @@ public class LoginActivity extends AppCompatActivity {
         et_emailLogin = findViewById(R.id.et_emailLogin);
         et_passLogin = findViewById(R.id.et_passLogin);
         pb_Login = findViewById(R.id.pb_Login);
-
+        pb_Login.setVisibility(View.GONE);
         mAuth = FirebaseAuth.getInstance();
+        getSupportActionBar().hide();
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
