@@ -1,14 +1,11 @@
-package com.srt.bittrade;
+package com.srt.bittrade.login_signup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,10 +17,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.io.Console;
-
-import static android.widget.Toast.LENGTH_SHORT;
+import com.srt.bittrade.MainActivity;
+import com.srt.bittrade.R;
 
 public class LoginActivity extends AppCompatActivity {
     private Button btn_login;
@@ -33,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String emailLogin, passwodLogin;
     private ProgressBar pb_Login;
+    private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +43,12 @@ public class LoginActivity extends AppCompatActivity {
         pb_Login.setVisibility(View.GONE);
         mAuth = FirebaseAuth.getInstance();
         getSupportActionBar().hide();
+
+        if(mAuth.getCurrentUser() != null){
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+        }
+
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override

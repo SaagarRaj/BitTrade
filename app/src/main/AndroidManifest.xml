@@ -4,20 +4,20 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/images"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity"></activity>
-        <activity android:name=".SignupActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".login_signup.SignupActivity" />
+        <activity android:name=".login_signup.LoginActivity">
         </activity>
         <activity android:name=".ui.login.Login_Activity" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".SplashActivity">
+        <activity android:name=".login_signup.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

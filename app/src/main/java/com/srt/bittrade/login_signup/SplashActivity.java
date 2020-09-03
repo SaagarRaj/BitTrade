@@ -1,10 +1,12 @@
-package com.srt.bittrade;
+package com.srt.bittrade.login_signup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.srt.bittrade.R;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -19,6 +21,6 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(new Intent(SplashActivity.this,LoginActivity.class));
                 finish();
             }
-        },1000);
+        },500);
     }
 }
