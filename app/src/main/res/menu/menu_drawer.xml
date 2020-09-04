@@ -3,7 +3,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/Dashboard"
+            android:id="@+id/Home"
             android:icon="@drawable/ic_baseline_home_24"
             android:title="Home" />
 

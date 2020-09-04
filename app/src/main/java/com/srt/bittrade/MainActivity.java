@@ -22,6 +22,9 @@ import android.widget.Toolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.srt.bittrade.fragment.AboutAppFragment;
+import com.srt.bittrade.fragment.HomeFragment;
+import com.srt.bittrade.fragment.ProfileFragment;
 import com.srt.bittrade.login_signup.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,17 +42,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         frameLayout = findViewById(R.id.Frame);
-
+        getSupportActionBar().hide();
         //toolbar = findViewById(R.id.Toolbar);
         currentUser();
         configureNavigationDrawer();
-
-
-
-
-
-
-
 
     }
 
@@ -83,9 +79,15 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment fragment = null;
                 int itemID = item.getItemId();
-
-
-
+                if(itemID == R.id.AboutApp){
+                    fragment = new AboutAppFragment();
+                } else if(itemID ==R.id.Home){
+                    fragment = new HomeFragment();
+                } else if(itemID == R.id.Profile){
+                    fragment = new ProfileFragment();
+                }else if(itemID == R.id.Logout){
+                   Logout();
+                }
                 Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
                 if (fragment != null) {
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -102,6 +104,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private void Logout() {
+        auth.signOut();
+        Toast.makeText(MainActivity.this, "Logout",Toast.LENGTH_SHORT);
+        startActivity(new Intent(MainActivity.this , LoginActivity.class));
+    }
+
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void ActionBar() {
         ActionBar actionBar;
@@ -109,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
         ColorDrawable colorDrawable;
         colorDrawable = new ColorDrawable(Color.parseColor("#192537"));
         actionBar.setBackgroundDrawable(colorDrawable);
-
 
     }
 }
