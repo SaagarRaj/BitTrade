@@ -7,6 +7,11 @@
     <item name="colorAccent">@color/colorAccent</item>
 </style>
 
+    <style name="ThemeOverlay.MyApp.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:text">title</item>
+    </style>
 
 
 

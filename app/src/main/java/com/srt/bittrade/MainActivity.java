@@ -3,6 +3,7 @@ package com.srt.bittrade;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -15,7 +16,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.SurfaceControl;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -31,21 +34,22 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private CoordinatorLayout coordinatorLayout;
     private FrameLayout frameLayout;
-    private Toolbar toolbar;
     private NavigationView navigationView;
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
-
+    private ActionBarDrawerToggle mToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         frameLayout = findViewById(R.id.Frame);
-        getSupportActionBar().hide();
-        //toolbar = findViewById(R.id.Toolbar);
         currentUser();
+        ActionBar();
+        setUpToolbar();
         configureNavigationDrawer();
+       // openHome();
+
 
     }
 
@@ -71,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void configureNavigationDrawer() {
+
         drawerLayout = findViewById(R.id.drawerLayout);
         NavigationView navigationView = findViewById(R.id.navigationView);
 
@@ -110,8 +115,17 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this , LoginActivity.class));
     }
 
+    private void setUpToolbar(){
+        drawerLayout = findViewById(R.id.drawerLayout);
+        mToggle = new ActionBarDrawerToggle(this , drawerLayout , R.string.open , R.string.close);
+        drawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    }
+
+
     private void ActionBar() {
         ActionBar actionBar;
         actionBar = getSupportActionBar();
@@ -119,5 +133,14 @@ public class MainActivity extends AppCompatActivity {
         colorDrawable = new ColorDrawable(Color.parseColor("#192537"));
         actionBar.setBackgroundDrawable(colorDrawable);
 
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(mToggle.onOptionsItemSelected(item))
+            return true;
+
+        return super.onOptionsItemSelected(item);
     }
 }
