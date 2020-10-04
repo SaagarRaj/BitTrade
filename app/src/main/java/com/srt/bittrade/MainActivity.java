@@ -7,6 +7,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         frameLayout = findViewById(R.id.Frame);
+        openDashboard();
         currentUser();
         ActionBar();
         setUpToolbar();
@@ -114,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this, "Logout",Toast.LENGTH_SHORT);
         startActivity(new Intent(MainActivity.this , LoginActivity.class));
     }
-
     private void setUpToolbar(){
         drawerLayout = findViewById(R.id.drawerLayout);
         mToggle = new ActionBarDrawerToggle(this , drawerLayout , R.string.open , R.string.close);
@@ -124,8 +125,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
-
-
     private void ActionBar() {
         ActionBar actionBar;
         actionBar = getSupportActionBar();
@@ -135,7 +134,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(mToggle.onOptionsItemSelected(item))
@@ -143,4 +141,23 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed() {
+
+
+        super.onBackPressed();
+    }
+
+    private void openDashboard(){
+        navigationView = findViewById(R.id.navigationView);
+        Fragment fragment = new HomeFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.Frame ,new  HomeFragment()).addToBackStack(null).commit();
+        getSupportActionBar().setTitle("Home");
+        navigationView.setCheckedItem(R.id.Home);
+
+    }
+
+
+
 }
