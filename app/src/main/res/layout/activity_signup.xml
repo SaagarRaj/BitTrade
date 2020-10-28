@@ -37,10 +37,26 @@
             android:textSize="20dp" />
 
         <EditText
-            android:id="@+id/et_emailSignup"
+            android:id="@+id/et_Phone_no_Signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/et_nameSignup"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="25dp"
+            android:background="@drawable/border"
+            android:drawableLeft="@drawable/ic_baseline_phone_android_24"
+            android:hint="   Phone number"
+            android:padding="10dp"
+            android:textColor="#ffffff"
+            android:textColorHint="@color/colorBg"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/et_emailSignup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_Phone_no_Signup"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
             android:layout_marginRight="25dp"
