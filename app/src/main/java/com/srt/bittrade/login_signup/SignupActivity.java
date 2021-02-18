@@ -1,39 +1,70 @@
 package com.srt.bittrade.login_signup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.Image;
+import android.net.Uri;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+import com.srt.bittrade.MainActivity;
 import com.srt.bittrade.R;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import io.grpc.ClientStreamTracer;
+
 public class SignupActivity extends AppCompatActivity {
     private EditText et_nameSignup, et_emailSignup, et_passwordSignup , et_Phone_no_signup;
     private Button btn_signup;
-    private FirebaseAuth mAuth;
-    private FirebaseFirestore Firestore;
     private String email, pass;
-    String userID;
-    private static final int RC_SIGN_IN = 123;
+    private ProgressBar progressBar;
+
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+    FirebaseStorage firebaseStorage;
+    StorageReference storageReference;
+    DocumentReference documentReference;
+    FirebaseFirestore firestore ;
+    private  ImageView imageView;
+    private Uri imageUri;
+    private static final int PICK_IMAGE=1;
+    UploadTask uploadTask;
+    Bitmap bitmap;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,71 +76,98 @@ public class SignupActivity extends AppCompatActivity {
         btn_signup = findViewById(R.id.btn_signup);
         et_nameSignup= findViewById(R.id.et_nameSignup);
         et_Phone_no_signup = findViewById(R.id.et_Phone_no_Signup);
+        progressBar = findViewById(R.id.progressbar_signup);
         mAuth = FirebaseAuth.getInstance();
-        Firestore = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
+        firestore = FirebaseFirestore.getInstance();
+        storageReference = firebaseStorage.getInstance().getReference("profile image");
+
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signup();
+                FirebaseUser user = mAuth.getCurrentUser();
+                if(user == null){
+                    signup();
+                }
+                else{
+                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                    finish();
+                }
             }
         });
+
 
 
     }
 
-    public void signup() {
-        email = et_emailSignup.getText().toString();
-        pass = et_passwordSignup.getText().toString();
-        final String Name = et_nameSignup.getText().toString();
-        final String phone_no = et_Phone_no_signup.getText().toString();
-
-
+    private void signup() {
+        final String email = et_emailSignup.getText().toString();
+        final String pass = et_passwordSignup.getText().toString().trim();
+        final String name = et_nameSignup.getText().toString();
+        final String phno = et_Phone_no_signup.getText().toString();
+        final String[] userID = new String[1];
         if (TextUtils.isEmpty(email)) {
-            Toast.makeText(getApplicationContext(), "Please enter email...", Toast.LENGTH_LONG).show();
+           et_emailSignup.setError("Email required");
             return;
         }
         if (TextUtils.isEmpty(pass)) {
-            Toast.makeText(getApplicationContext(), "Please enter password!", Toast.LENGTH_LONG).show();
+            et_passwordSignup.setError("Password Required");
+            return;
+        }
+        if(pass.length()<6){
+            et_passwordSignup.setError("Password must be >= 6 Character");
             return;
         }
 
-        mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        progressBar.setVisibility(View.VISIBLE);
+
+        mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                  Toast.makeText(SignupActivity.this,"User Created ",Toast.LENGTH_SHORT).show();
+                  userID[0] = mAuth.getCurrentUser().getUid();
+                  DocumentReference documentReference = firestore.collection("users").document(userID[0]);
+                  Map<String,Object> user = new HashMap<>();
+                  user.put("Fname",name);
+                  user.put("phone",phno);
+                  user.put("email",email);
+                  user.put("password",pass);
+                  user.put("Wallet",10000);
+                  documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                      @Override
+                      public void onSuccess(Void aVoid) {
+                          Log.d("TAG","onSuccess: User profile is created for "+userID);
+                      }
+                  }).addOnFailureListener(new OnFailureListener() {
+                      @Override
+                      public void onFailure(@NonNull Exception e) {
+                          Log.d("TAG","onFailure :: user"+userID+" Exception :"+ e.toString());
+                      }
+                  });
+                  startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                  Toast.makeText(SignupActivity.this,"Signup Bonus 10000$",Toast.LENGTH_LONG).show();
 
-
-                if (task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_LONG).show();
-                    userID = mAuth.getCurrentUser().getUid();
-                    //Firestore
-                    DocumentReference documentReference = Firestore.collection("users").document(userID);
-                    final Map<String,Object> user = new  HashMap<>();
-                    user.put("Name",Name);
-                    user.put("Email",email);
-                    user.put("Phone",phone_no);
-                    documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.d("TAG","OnSuccess: User profile is created for"+user);
-                        }
-
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.d("TAG","onFailure: "+e.toString());
-                        }
-                    });
-                    startActivity(new Intent(SignupActivity.this, LoginActivity.class));
-                } else {
-                    Toast.makeText(SignupActivity.this, "Registartion failed", Toast.LENGTH_LONG).show();
-                    return;
+                }
+                else{
+                     Toast.makeText(SignupActivity.this,"Error occured"+ task.getException().toString() , Toast.LENGTH_LONG).show();
                 }
             }
         });
+
+    }
+
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PICK_IMAGE || requestCode == RESULT_OK || data != null || data.getData() != null){
+            imageUri = data.getData();
+            Picasso.get().load(imageUri).into(imageView);
+        }
     }
 
 
 }
-
-
-/* */

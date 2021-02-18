@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.icu.text.CaseMap;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -31,6 +32,8 @@ import com.srt.bittrade.fragment.HomeFragment;
 import com.srt.bittrade.fragment.ProfileFragment;
 import com.srt.bittrade.login_signup.LoginActivity;
 
+import static com.srt.bittrade.R.id.Frame;
+
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private CoordinatorLayout coordinatorLayout;
@@ -38,13 +41,14 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
     private ActionBarDrawerToggle mToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        frameLayout = findViewById(R.id.Frame);
+        frameLayout = findViewById(Frame);
         openDashboard();
         currentUser();
         ActionBar();
@@ -98,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
                 if (fragment != null) {
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.Frame, fragment); // replace a Fragment with Frame Layout
+                    transaction.replace(Frame, fragment); // replace a Fragment with Frame Layout
                     transaction.commit(); // commit the changes
                     drawerLayout.closeDrawers(); // close the all open Drawer Views
                     return true;
@@ -116,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this, "Logout",Toast.LENGTH_SHORT);
         startActivity(new Intent(MainActivity.this , LoginActivity.class));
     }
+
     private void setUpToolbar(){
         drawerLayout = findViewById(R.id.drawerLayout);
         mToggle = new ActionBarDrawerToggle(this , drawerLayout , R.string.open , R.string.close);
@@ -123,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
         mToggle.syncState();
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
 
     }
     private void ActionBar() {
@@ -134,6 +141,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(mToggle.onOptionsItemSelected(item))
@@ -144,16 +156,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
-
         super.onBackPressed();
+
     }
 
     private void openDashboard(){
         navigationView = findViewById(R.id.navigationView);
         Fragment fragment = new HomeFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.Frame ,new  HomeFragment()).addToBackStack(null).commit();
-        getSupportActionBar().setTitle("Home");
+        getSupportFragmentManager().beginTransaction().replace(Frame ,new  HomeFragment()).addToBackStack(null).commit();
         navigationView.setCheckedItem(R.id.Home);
 
     }

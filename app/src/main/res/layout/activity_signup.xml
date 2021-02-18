@@ -7,11 +7,13 @@
     android:background="@color/colorBg"
     tools:context=".login_signup.SignupActivity">
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
         android:background="@color/colorBg2">
+
 
         <ImageView
             android:id="@+id/img_bittrade2"
@@ -20,13 +22,14 @@
             android:src="@drawable/logo2" />
 
 
+
         <EditText
             android:id="@+id/et_nameSignup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/img_bittrade2"
+            android:layout_below="@id/img_bittrade2"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="25dp"
             android:background="@drawable/border"
             android:drawableLeft="@drawable/ic_baseline_person_24"
@@ -100,6 +103,15 @@
             android:textColor="@color/colorBg2"
             android:textSize="25dp"
             android:textStyle="bold" />
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressbar_signup"
+            android:layout_below="@id/btn_signup"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:visibility="invisible"/>
+
 
 
     </RelativeLayout>

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "222267955610-7drq2spu4b80481rl612drft8qiggqui.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.srt.bittrade",
+            "certificate_hash": "a623f2fb2302c8b2e9cfa0de91911d028fb6d277"
+          }
+        },
+        {
           "client_id": "222267955610-qfqamd5q26hqt73ble44fgumtgi2jhnh.apps.googleusercontent.com",
           "client_type": 3
         }
