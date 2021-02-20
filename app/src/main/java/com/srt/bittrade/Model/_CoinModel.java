@@ -2,7 +2,7 @@ package com.srt.bittrade.Model;
 
 import com.google.type.DateTime;
 
-public class CoinModel {
+public class _CoinModel {
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
 
 
@@ -15,7 +15,7 @@ public class CoinModel {
         public String price_usd;
 
 
-    public CoinModel(String percent_change_1h, String percent_change_24h, String percent_change_7d, String id, String name, String symbol, String price_usd) {
+    public _CoinModel(String percent_change_1h, String percent_change_24h, String percent_change_7d, String id, String name, String symbol, String price_usd) {
         this.percent_change_1h = percent_change_1h;
         this.percent_change_24h = percent_change_24h;
         this.percent_change_7d = percent_change_7d;

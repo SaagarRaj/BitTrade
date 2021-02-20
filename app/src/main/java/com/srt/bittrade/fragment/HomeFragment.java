@@ -20,10 +20,11 @@ import com.srt.bittrade.Adapter.CoinAdapter;
 import com.srt.bittrade.Interface.ILoadMore;
 import com.srt.bittrade.MainActivity;
 import com.srt.bittrade.Model.CoinModel;
+import com.srt.bittrade.Model.Datum;
+import com.srt.bittrade.Model._CoinModel;
 import com.srt.bittrade.R;
 
 import org.jetbrains.annotations.NotNull;
-import org.xmlpull.v1.XmlPullParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class HomeFragment extends Fragment {
-    List<CoinModel> items = new ArrayList<>();
+    List<Datum> items = new ArrayList<>();
     CoinAdapter adapter;
     RecyclerView recyclerView;
 
@@ -109,12 +110,12 @@ public class HomeFragment extends Fragment {
                 String body = response.body().string();
                 Gson gson = new Gson();
 
-                final List<CoinModel> newItems = gson.fromJson(body,new TypeToken<List<CoinModel>>(){}.getType());
+                final CoinModel coinmodel = gson.fromJson(body,new TypeToken<CoinModel>(){}.getType());
 
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        items.addAll(newItems);
+                        items.addAll(coinmodel.getData());
                         adapter.setLoaded();
                         adapter.updateData(items);
                         swipeRefreshLayout.setRefreshing(false);
@@ -146,12 +147,17 @@ public class HomeFragment extends Fragment {
                 String body = response.body().string();
                 Gson gson = new Gson();
 
-                final List<CoinModel> newItems = gson.fromJson(body,new TypeToken<List<CoinModel>>(){}.getType());
+                final CoinModel coinmodel = gson.fromJson(body,new TypeToken<CoinModel>(){}.getType());
 
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        adapter.updateData(newItems);
+                        if(coinmodel != null){
+                            adapter.updateData(coinmodel.getData());
+                        }else{
+                            Toast.makeText(getContext(),"Something went wrong!!",Toast.LENGTH_LONG).show();
+                        }
+
                     }
                 });
 
