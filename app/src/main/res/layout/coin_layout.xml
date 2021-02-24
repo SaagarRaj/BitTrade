@@ -90,9 +90,9 @@
             android:id="@+id/OneHourtext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:text="1 hr"
-            app:layout_constraintStart_toEndOf="@id/coin_icon"
+
             app:layout_constraintTop_toBottomOf="@id/coin_icon"
             tools:ignore="MissingConstraints" />
 
@@ -100,8 +100,8 @@
             android:id="@+id/PercentChange1htext"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:text="8"
             android:textColor="@color/colorPrimary"
             app:layout_constraintStart_toEndOf="@id/OneHourtext"
@@ -113,8 +113,8 @@
             android:id="@+id/twentyfourHourtext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="36dp"
             android:layout_marginStart="36dp"
+            android:layout_marginLeft="36dp"
             android:text="24hr"
             app:layout_constraintStart_toEndOf="@id/PercentChange1htext"
             app:layout_constraintTop_toBottomOf="@id/coin_icon"
@@ -125,8 +125,8 @@
             android:id="@+id/PercentChange24htext"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:text="8"
             android:textColor="@color/colorPrimary"
             app:layout_constraintStart_toEndOf="@id/twentyfourHourtext"
@@ -138,8 +138,8 @@
             android:id="@+id/sevendaytext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="36dp"
             android:layout_marginStart="36dp"
+            android:layout_marginLeft="36dp"
             android:text="7D"
             app:layout_constraintStart_toEndOf="@id/PercentChange24htext"
             app:layout_constraintTop_toBottomOf="@id/coin_icon"
@@ -150,14 +150,42 @@
             android:id="@+id/PercentChange7dtext"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:text="8"
             android:textColor="@color/colorPrimary"
             app:layout_constraintStart_toEndOf="@id/sevendaytext"
             app:layout_constraintTop_toBottomOf="@id/coin_icon"
             tools:ignore="MissingConstraints" />
 
+        <Button
+            android:id="@+id/Button_Buy"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:text="BUY"
+            android:textSize="8dp"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            app:layout_constraintStart_toEndOf="@id/OneHourtext"
+            app:layout_constraintTop_toBottomOf="@id/OneHourtext"
+            android:background="@drawable/btn_buy"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/Button_Sell"
+            android:paddingBottom="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/btn_sell"
+            android:text="SELL"
+            android:textSize="8dp"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/PercentChange24htext"
+            app:layout_constraintTop_toBottomOf="@id/sevendaytext"
+            tools:ignore="MissingConstraints" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

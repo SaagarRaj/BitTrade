@@ -114,24 +114,13 @@
         android:textColor="#000000"
         android:textSize="20dp" />
 
-    <Button
-        android:id="@+id/ChangeProfileImg"
-        android:layout_width="401dp"
-        android:layout_height="48dp"
-        android:layout_alignTop="@+id/TextProfileWallet"
-
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginRight="20dp"
-
-        android:fontFamily="@font/poppins"
-        android:text="Change  Profile  image " />
 
     <Button
         android:id="@+id/Logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ChangeProfileImg"
+
+        android:layout_below="@id/TextProfileWallet"
         android:text="LOGOUT"
         android:fontFamily="@font/poppins"
         android:layout_margin="10dp"/>

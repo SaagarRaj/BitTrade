@@ -59,8 +59,6 @@ public class SignupActivity extends AppCompatActivity {
     private  ImageView imageView;
     private Uri imageUri;
     private static final int PICK_IMAGE=1;
-    UploadTask uploadTask;
-    Bitmap bitmap;
 
 
 
@@ -133,7 +131,7 @@ public class SignupActivity extends AppCompatActivity {
                   user.put("phone",phno);
                   user.put("email",email);
                   user.put("password",pass);
-                  user.put("Wallet",10000);
+                  user.put("Wallet",10000.0);
                   documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                       @Override
                       public void onSuccess(Void aVoid) {

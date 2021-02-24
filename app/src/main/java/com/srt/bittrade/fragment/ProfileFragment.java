@@ -34,10 +34,11 @@ import static com.srt.bittrade.R.layout.*;
 
 
 public class ProfileFragment extends Fragment {
-    private TextView TextProfileName , TextProfileEmail , TextProfilePhone;
+    private TextView TextProfileName , TextProfileEmail , TextProfilePhone , TextProfileWallet;
+
     private FirebaseAuth mAuth;
     private ImageView profileimg;
-    private Button ChangeProfileImg , Logout;
+    private Button  Logout;
     private FirebaseFirestore fstore;
     String userID ;
     @Override
@@ -51,7 +52,7 @@ public class ProfileFragment extends Fragment {
         profileimg = view.findViewById(R.id.UserVectorId);
         Logout = view.findViewById(R.id.Logout);
         userID = mAuth.getCurrentUser().getUid();
-        ChangeProfileImg = view.findViewById(R.id.ChangeProfileImg);
+        TextProfileWallet = view.findViewById(R.id.TextProfileWallet);
         final DocumentReference documentReference = fstore.collection("users").document(userID);
         documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -59,16 +60,11 @@ public class ProfileFragment extends Fragment {
                 TextProfilePhone.setText(DocumentSnapshot.getString("phone"));
                 TextProfileName.setText(DocumentSnapshot.getString("Fname"));
                 TextProfileEmail.setText(DocumentSnapshot.getString("email"));
+                TextProfileWallet.setText(String.valueOf(DocumentSnapshot.getDouble("Wallet")));
             }
         });
 
 
-        ChangeProfileImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         Logout.setOnClickListener(new View.OnClickListener() {
             @Override

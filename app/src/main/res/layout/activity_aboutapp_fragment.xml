@@ -16,6 +16,7 @@
         tools:layout_editor_absoluteY="1dp" />
 
     <TextView
+
         android:layout_width="389dp"
         android:layout_height="144dp"
         android:layout_margin="10dp"
@@ -28,5 +29,6 @@ The application works such as to allow an user to buy or sell over any available
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="16dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
